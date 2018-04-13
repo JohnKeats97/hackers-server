@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import seabattle.authorization.service.UserService;
+import seabattle.authorization.service.JdbcTestService;
 import seabattle.authorization.views.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,8 @@ public class Controller {
 
     @Autowired
     private UserService dbUsers;
+
+    private JdbcTestService dbTest;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -152,5 +155,13 @@ public class Controller {
     public ResponseEntity<AboutView> getAbout() {
         String about = "Sea battle by Technopark students.\nRelease date: winter 2017";
         return ResponseEntity.status(HttpStatus.OK).body(new AboutView(about));
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, path = "test",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TestView>> getTest() {
+        List<TestView> test = dbTest.getTest();
+        return ResponseEntity.status(HttpStatus.OK).body(test);
     }
 }
