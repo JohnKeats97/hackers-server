@@ -166,6 +166,8 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.OK).body(test);
     }
 
+
+
     @RequestMapping(method = RequestMethod.GET, path = "test", // убрать пароли
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TestView>> getTest() {
@@ -179,4 +181,13 @@ public class Controller {
         dbTest.addTest(test);
         return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
     }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/delete-test",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteTest(@RequestBody Integer id) {
+        dbTest.deleteTest(id);
+        return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
+    }
+
+
 }
