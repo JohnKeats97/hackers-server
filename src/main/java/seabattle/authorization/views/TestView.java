@@ -1,5 +1,7 @@
 package seabattle.authorization.views;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TestView {
 
     private Integer id;
@@ -17,7 +19,7 @@ public class TestView {
         this.answer = answer;
     }
 
-    public TestView(String name, String text, String answer) {
+    public TestView(@JsonProperty("name") String name, @JsonProperty("text") String text, @JsonProperty("answer") String answer) {
         this.name = name;
         this.text = text;
         this.answer = answer;
