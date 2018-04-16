@@ -8,7 +8,7 @@ public interface TestService {
 
     void addTest(TestView user);
 
-    TestView changeTest(TestView test);
+    void changeTest(TestView test);
 
     void deleteTest(String testID);
 
