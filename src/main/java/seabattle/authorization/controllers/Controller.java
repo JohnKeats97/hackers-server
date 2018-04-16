@@ -159,6 +159,13 @@ public class Controller {
     }
 
 
+    @RequestMapping(method = RequestMethod.GET, path = "test-admin",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TestView>> getTestAdmin() {
+        List<TestView> test = dbTest.getTest();
+        return ResponseEntity.status(HttpStatus.OK).body(test);
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = "test",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TestView>> getTest() {
@@ -170,6 +177,6 @@ public class Controller {
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addTest(@RequestBody TestView test) {
         dbTest.addTest(test);
-        return ResponseEntity.status(HttpStatus.OK).body("Все оки");
+        return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
     }
 }
