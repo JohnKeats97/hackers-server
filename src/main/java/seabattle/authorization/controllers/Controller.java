@@ -28,6 +28,7 @@ public class Controller {
     @Autowired
     private UserService dbUsers;
 
+    @Autowired
     private JdbcTestService dbTest;
 
     @Autowired
