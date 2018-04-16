@@ -154,7 +154,7 @@ public class Controller {
     @RequestMapping(method = RequestMethod.GET, path = "about",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AboutView> getAbout() {
-        String about = "Sea battle by Technopark students.\nRelease date: winter 2017";
+        String about = "Created by John Buevich";
         return ResponseEntity.status(HttpStatus.OK).body(new AboutView(about));
     }
 
