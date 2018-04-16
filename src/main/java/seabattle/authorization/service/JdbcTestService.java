@@ -10,7 +10,7 @@ import java.util.List;
 
 @SuppressWarnings("SqlNoDataSourceInspection")
 @Service
-public class JdbcTestService {
+public class JdbcTestService implements TestService {
 
     private static final RowMapper<TestView> READ_TEST_MAPPER = (resultSet, rowNumber) ->
             new TestView(resultSet.getInt("id"),
@@ -19,13 +19,31 @@ public class JdbcTestService {
 
     private JdbcTemplate template;
 
+
     public JdbcTestService(JdbcTemplate template) {
         this.template = template;
     }
 
-        public List<TestView> getTest() {
+    @Override
+    public List<TestView> getTest() {
         String sql = "SELECT * FROM test";
         return template.query(sql, READ_TEST_MAPPER);
+    }
+
+    @Override
+    public void addTest(TestView user) {
+
+    }
+
+    @Override
+    public TestView changeTest(TestView test) {
+        TestView tv = new TestView(1, "2", "3");
+        return tv;
+    }
+
+    @Override
+    public void deleteTest(Integer testID) {
+
     }
 
 }
