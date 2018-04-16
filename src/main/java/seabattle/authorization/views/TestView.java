@@ -17,6 +17,12 @@ public class TestView {
         this.answer = answer;
     }
 
+    public TestView(String name, String text, String answer) {
+        this.name = name;
+        this.text = text;
+        this.answer = answer;
+    }
+
     public String getAnswer() {
         return answer;
     }

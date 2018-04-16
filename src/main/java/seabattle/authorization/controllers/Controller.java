@@ -165,4 +165,11 @@ public class Controller {
         List<TestView> test = dbTest.getTest();
         return ResponseEntity.status(HttpStatus.OK).body(test);
     }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/add-test",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addTest(@RequestBody TestView test) {
+        Integer id = dbTest.addTest(test);
+        return ResponseEntity.status(HttpStatus.OK).body(id);
+    }
 }

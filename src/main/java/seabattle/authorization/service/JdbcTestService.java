@@ -32,8 +32,9 @@ public class JdbcTestService implements TestService {
     }
 
     @Override
-    public void addTest(TestView user) {
-
+    public void addTest(TestView test) {
+        String sql = "INSERT INTO test (name, text, answer) VALUES (?, ?, ?)";
+        template.update(sql, test.getName(), test.getText(), test.getAnswer());
     }
 
     @Override
