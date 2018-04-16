@@ -162,11 +162,11 @@ public class Controller {
     @RequestMapping(method = RequestMethod.GET, path = "test-admin",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TestView>> getTestAdmin() {
-        List<TestView> test = dbTest.getTest();
+        List<TestView> test = dbTest.getTestAdmin();
         return ResponseEntity.status(HttpStatus.OK).body(test);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "test",
+    @RequestMapping(method = RequestMethod.GET, path = "test", // убрать пароли
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TestView>> getTest() {
         List<TestView> test = dbTest.getTest();

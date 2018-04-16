@@ -19,6 +19,12 @@ public class TestView {
         this.answer = answer;
     }
 
+    public TestView(Integer id, String name, String text) {
+        this.id = id;
+        this.name = name;
+        this.text = text;
+    }
+
     public TestView(@JsonProperty("name") String name, @JsonProperty("text") String text, @JsonProperty("answer") String answer) {
         this.name = name;
         this.text = text;

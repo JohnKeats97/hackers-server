@@ -12,11 +12,16 @@ import java.util.List;
 @Service
 public class JdbcTestService implements TestService {
 
-    private static final RowMapper<TestView> READ_TEST_MAPPER = (resultSet, rowNumber) ->
+    private static final RowMapper<TestView> READ_TEST_ADMIN_MAPPER = (resultSet, rowNumber) ->
             new TestView(resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("text"),
                     resultSet.getString("answer"));
+
+    private static final RowMapper<TestView> READ_TEST_MAPPER = (resultSet, rowNumber) ->
+            new TestView(resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("text"));
 
     private JdbcTemplate template;
 
@@ -27,8 +32,14 @@ public class JdbcTestService implements TestService {
 
     @Override
     public List<TestView> getTest() {
-        String sql = "SELECT * FROM test";
+        String sql = "SELECT test.id, test.name, test.text FROM test";
         return template.query(sql, READ_TEST_MAPPER);
+    }
+
+    @Override
+    public List<TestView> getTestAdmin() {
+        String sql = "SELECT * FROM test";
+        return template.query(sql, READ_TEST_ADMIN_MAPPER);
     }
 
     @Override

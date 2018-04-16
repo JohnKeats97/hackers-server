@@ -13,4 +13,6 @@ public interface TestService {
     void deleteTest(Integer testID);
 
     List<TestView> getTest();
+
+    List<TestView> getTestAdmin();
 }
