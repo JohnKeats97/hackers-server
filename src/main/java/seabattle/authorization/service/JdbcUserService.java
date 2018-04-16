@@ -55,7 +55,7 @@ public class JdbcUserService implements UserService {
 
     @Override
     public List<LeaderboardView> getLeaderboard(Integer limit) {
-        String sql = "SELECT login, score FROM users ORDER BY score DESC LIMIT ?";
+        String sql = "SELECT login, score FROM users ORDER BY score DESC, login LIMIT ?";
         return template.query(sql, ps -> ps.setInt(1, limit), READ_USER_LOGIN_SCORE_MAPPER);
     }
 
