@@ -169,7 +169,7 @@ public class Controller {
     @RequestMapping(method = RequestMethod.POST, path = "/add-test",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addTest(@RequestBody TestView test) {
-        Integer id = dbTest.addTest(test);
-        return ResponseEntity.status(HttpStatus.OK).body(id);
+        dbTest.addTest(test);
+        return ResponseEntity.status(HttpStatus.OK).body("Все оки");
     }
 }
