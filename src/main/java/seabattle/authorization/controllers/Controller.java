@@ -184,7 +184,7 @@ public class Controller {
 
     @RequestMapping(method = RequestMethod.POST, path = "/delete-test",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteTest(@RequestBody Integer id) {
+    public ResponseEntity deleteTest(@RequestBody String id) {
         dbTest.deleteTest(id);
         return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
     }
