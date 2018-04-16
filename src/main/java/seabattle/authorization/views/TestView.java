@@ -8,10 +8,21 @@ public class TestView {
 
     private String text;
 
-    public TestView(Integer id, String name, String text) {
+    private String answer;
+
+    public TestView(Integer id, String name, String text, String answer) {
         this.id = id;
         this.name = name;
         this.text = text;
+        this.answer = answer;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public Integer getId() {

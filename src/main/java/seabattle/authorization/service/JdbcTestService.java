@@ -15,7 +15,8 @@ public class JdbcTestService implements TestService {
     private static final RowMapper<TestView> READ_TEST_MAPPER = (resultSet, rowNumber) ->
             new TestView(resultSet.getInt("id"),
                     resultSet.getString("name"),
-                    resultSet.getString("text"));
+                    resultSet.getString("text"),
+                    resultSet.getString("answer"));
 
     private JdbcTemplate template;
 
@@ -37,7 +38,7 @@ public class JdbcTestService implements TestService {
 
     @Override
     public TestView changeTest(TestView test) {
-        TestView tv = new TestView(1, "2", "3");
+        TestView tv = new TestView(1, "2", "3", "4");
         return tv;
     }
 
