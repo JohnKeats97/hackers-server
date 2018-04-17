@@ -25,6 +25,11 @@ public class TestView {
         this.text = text;
     }
 
+    public TestView(@JsonProperty("id") Integer id, @JsonProperty("answer") String answer) {
+        this.id = id;
+        this.answer = answer;
+    }
+
     public TestView(@JsonProperty("name") String name, @JsonProperty("text") String text, @JsonProperty("answer") String answer) {
         this.name = name;
         this.text = text;

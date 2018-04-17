@@ -197,4 +197,11 @@ public class Controller {
     }
 
 
+    @RequestMapping(method = RequestMethod.POST, path = "/test",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity checkTest(@RequestBody TestView test) {
+        dbTest.checkTest(test);
+        return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
+    }
+
 }
