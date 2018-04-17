@@ -16,5 +16,5 @@ public interface TestService {
 
     List<TestView> getTestAdmin();
 
-    void checkTest(TestView test);
+//    void checkTest(TestView test);
 }
