@@ -10,7 +10,7 @@ public interface TestService {
 
     void changeTest(TestView test);
 
-    void deleteTest(TestView testID);
+    void deleteTest(Integer testID);
 
     List<TestView> getTest();
 
