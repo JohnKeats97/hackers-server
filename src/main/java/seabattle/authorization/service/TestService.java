@@ -2,6 +2,7 @@ package seabattle.authorization.service;
 
 import seabattle.authorization.views.TestView;
 
+import javax.lang.model.type.IntersectionType;
 import java.util.List;
 
 public interface TestService {
@@ -10,7 +11,7 @@ public interface TestService {
 
     void changeTest(TestView test);
 
-    void deleteTest(String testID);
+    void deleteTest(Integer testID);
 
     List<TestView> getTest();
 

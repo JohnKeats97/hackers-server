@@ -50,13 +50,13 @@ public class JdbcTestService implements TestService {
 
     @Override
     public void changeTest(TestView test) {
-        String sql = "UPDATE test SET (name, text, answer) = (?, ?, ?) WHERE id = ?";
+        String sql = "UPDATE test SET name = ?, text = ?, answer = ? WHERE id = ?";
         template.update(sql, test.getName(), test.getText(), test.getAnswer(), test.getName());
     }
 
     @Override
-    public void deleteTest(String testID) {
-        String sql = "DELETE FROM test WHERE test.id=?";
+    public void deleteTest(Integer testID) {
+        String sql = "DELETE FROM test WHERE test.id = ?";
         template.update(sql, testID);
     }
 
