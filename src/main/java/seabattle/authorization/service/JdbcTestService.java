@@ -51,7 +51,7 @@ public class JdbcTestService implements TestService {
     @Override
     public void changeTest(TestView test) {
         String sql = "UPDATE test SET name = ?, text = ?, answer = ? WHERE id = ?";
-        template.update(sql, test.getName(), test.getText(), test.getAnswer(), test.getName());
+        template.update(sql, test.getName(), test.getText(), test.getAnswer(), test.getId());
     }
 
     @Override
