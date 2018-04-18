@@ -184,8 +184,8 @@ public class Controller {
 
     @RequestMapping(method = RequestMethod.POST, path = "/delete-test",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteTest(@RequestBody Integer id) {
-        dbTest.deleteTest(id);
+    public ResponseEntity deleteTest(@RequestBody TestView testView) {
+        dbTest.deleteTest(testView.getId());
         return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
     }
 
@@ -196,12 +196,19 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
     }
 
-//
-//    @RequestMapping(method = RequestMethod.POST, path = "/test",
-//            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity checkTest(@RequestBody TestView test) {
-//        dbTest.checkTest(test);
-//        return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
-//    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/test",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity checkTest(@RequestBody TestView test,
+                                    HttpSession httpSession) {
+        String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
+        if (currentUser != null) {
+            dbTest.checkTest(test, currentUser);
+            return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"response\": \"NOT LOGIN\"}");
+        }
+
+    }
 
 }
