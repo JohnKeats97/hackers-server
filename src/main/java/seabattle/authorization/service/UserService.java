@@ -12,7 +12,7 @@ public interface UserService {
 
     UserView getByLoginOrEmail(String loginOrEmail);
 
-    Array getTestByLoginOrEmail(String loginOrEmail);
+    String[] getTestByLoginOrEmail(String loginOrEmail);
     
     UserView changeUser(UserView user);
 

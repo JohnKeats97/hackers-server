@@ -80,9 +80,10 @@ public class JdbcUserService implements UserService {
     }
 
     @Override
-    public Array getTestByLoginOrEmail(String loginOrEmail) {
-        Array tests = template.queryForObject("SELECT tests FROM users WHERE email = ? "
+    public String[] getTestByLoginOrEmail(String loginOrEmail) {
+        Array sql = template.queryForObject("SELECT tests FROM users WHERE email = ? "
                 + "OR login = ?", Array.class, loginOrEmail, loginOrEmail);
+        String[] tests = (String[])sql.getArray();
         return tests;
     }
 }
