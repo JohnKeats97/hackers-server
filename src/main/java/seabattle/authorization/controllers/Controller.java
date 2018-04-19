@@ -206,9 +206,9 @@ public class Controller {
         if (currentUser != null) {
             try {
                 dbTest.checkTest(test, currentUser);
-                return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
+                return ResponseEntity.status(HttpStatus.OK).body("{\"answer\": \"OK\"}");
             } catch (Exception ex) {
-                return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"NOT\"}");
+                return ResponseEntity.status(HttpStatus.OK).body("{\"answer\": \"NOT\"}");
             }
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"response\": \"NOT LOGIN\"}");
