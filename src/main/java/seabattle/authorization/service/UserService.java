@@ -2,6 +2,7 @@ package seabattle.authorization.service;
 
 import seabattle.authorization.views.LeaderboardView;
 import seabattle.authorization.views.UserView;
+import java.sql.Array;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ public interface UserService {
     void addUser(UserView user);
 
     UserView getByLoginOrEmail(String loginOrEmail);
+
+    Array getTestByLoginOrEmail(String loginOrEmail);
     
     UserView changeUser(UserView user);
 

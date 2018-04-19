@@ -12,6 +12,7 @@ import seabattle.authorization.views.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import java.sql.Array;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -209,6 +210,21 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"response\": \"NOT LOGIN\"}");
         }
 
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/user-test")
+    public ResponseEntity userTest (HttpSession httpSession) {
+        final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
+        if (currentUser == null) {
+            return ResponseEntity.status(HttpStatus.OK).body(ResponseView.ERROR_NOT_LOGGED_IN);
+        }
+        try {
+            Array tests = dbUsers.getTestByLoginOrEmail(currentUser);
+            return ResponseEntity.status(HttpStatus.OK).body(tests);
+        } catch (DataAccessException ex) {
+            httpSession.setAttribute(CURRENT_USER_KEY, null);
+            return ResponseEntity.status(HttpStatus.OK).body(ResponseView.ERROR_NOT_LOGGED_IN);
+        }
     }
 
 }

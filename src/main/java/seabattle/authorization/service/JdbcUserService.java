@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import seabattle.authorization.views.LeaderboardView;
 import seabattle.authorization.views.UserView;
+import java.sql.Array;
 
 import java.util.List;
 
@@ -76,5 +77,11 @@ public class JdbcUserService implements UserService {
                 + "WHERE rat.login = ?";
         return template.query(sql, ps -> ps.setString(1, user.getLogin()),
                 READ_POSITION_MAPPER).get(0) + 1;
+    }
+
+    @Override
+    public Array getTestByLoginOrEmail(String loginOrEmail) {
+        Array tests = template.queryForObject("SELECT tests FROM users WHERE email = ? OR login = ?", Array.class, loginOrEmail, loginOrEmail);
+        return tests;
     }
 }
