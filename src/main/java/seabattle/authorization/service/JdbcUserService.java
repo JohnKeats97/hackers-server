@@ -85,9 +85,11 @@ public class JdbcUserService implements UserService {
                 + "OR login = ?", Array.class, loginOrEmail, loginOrEmail);
         try {
             String[] tests = (String[]) sql.getArray();
+            return tests;
         }catch (Exception e) {
             e.printStackTrace();
+            String[] tests = ["1"];
+            return tests;
         }
-        return tests;
     }
 }
