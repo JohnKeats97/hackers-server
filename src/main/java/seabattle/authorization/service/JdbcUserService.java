@@ -88,7 +88,7 @@ public class JdbcUserService implements UserService {
             return tests;
         }catch (Exception e) {
             e.printStackTrace();
-            String[] tests = ["1"];
+            String[] tests;
             return tests;
         }
     }
