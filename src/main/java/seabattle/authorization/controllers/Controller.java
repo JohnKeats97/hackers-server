@@ -169,7 +169,7 @@ public class Controller {
 
 
 
-    @RequestMapping(method = RequestMethod.GET, path = "test", // убрать пароли
+    @RequestMapping(method = RequestMethod.GET, path = "test",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TestView>> getTest() {
         List<TestView> test = dbTest.getTest();
@@ -204,8 +204,12 @@ public class Controller {
                                     HttpSession httpSession) {
         String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
         if (currentUser != null) {
-            dbTest.checkTest(test, currentUser);
-            return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
+            try {
+                dbTest.checkTest(test, currentUser);
+                return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
+            } catch (SqlException ex) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"NOT\"}");
+            }
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"response\": \"NOT LOGIN\"}");
         }
