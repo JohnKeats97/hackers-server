@@ -219,7 +219,7 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.OK).body(ResponseView.ERROR_NOT_LOGGED_IN);
         }
         try {
-            final String[] tests = dbUsers.getTestByLoginOrEmail(currentUser);
+            final Integer[] tests = dbUsers.getTestByLoginOrEmail(currentUser);
             return ResponseEntity.status(HttpStatus.OK).body(tests);
         } catch (DataAccessException ex) {
             httpSession.setAttribute(CURRENT_USER_KEY, null);
