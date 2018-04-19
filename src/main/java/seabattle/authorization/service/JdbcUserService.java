@@ -83,7 +83,11 @@ public class JdbcUserService implements UserService {
     public String[] getTestByLoginOrEmail(String loginOrEmail) {
         Array sql = template.queryForObject("SELECT tests FROM users WHERE email = ? "
                 + "OR login = ?", Array.class, loginOrEmail, loginOrEmail);
-        String[] tests = (String[])sql.getArray();
+        try {
+            String[] tests = (String[]) sql.getArray();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return tests;
     }
 }
