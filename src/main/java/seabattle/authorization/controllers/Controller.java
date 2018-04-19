@@ -207,7 +207,7 @@ public class Controller {
             try {
                 dbTest.checkTest(test, currentUser);
                 return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
-            } catch (SqlException ex) {
+            } catch (Exception ex) {
                 return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"NOT\"}");
             }
         } else {
