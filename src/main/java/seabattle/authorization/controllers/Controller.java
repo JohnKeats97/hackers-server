@@ -213,7 +213,7 @@ public class Controller {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/user-test")
-    public ResponseEntity userTest (HttpSession httpSession) {
+    public ResponseEntity userTest(HttpSession httpSession) {
         final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
         if (currentUser == null) {
             return ResponseEntity.status(HttpStatus.OK).body(ResponseView.ERROR_NOT_LOGGED_IN);
