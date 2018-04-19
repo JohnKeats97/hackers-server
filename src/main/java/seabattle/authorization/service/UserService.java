@@ -10,6 +10,8 @@ public interface UserService {
     void addUser(UserView user);
 
     UserView getByLoginOrEmail(String loginOrEmail);
+
+    Integer[] getTestByLoginOrEmail(String loginOrEmail);
     
     UserView changeUser(UserView user);
 

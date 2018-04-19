@@ -64,7 +64,7 @@ public class JdbcTestService implements TestService {
     public void checkTest(TestView test, String username) {
         String sql = "UPDATE users SET tests = tests || (SELECT id FROM test WHERE id = ? AND answer = ?),"
                 + " score = score + 1, last_answer = now()  "
-                + "WHERE NOT tests @> ARRAY[(SELECT id FROM test WHERE id = ? AND answer = ?)] AND name = ?";
+                + "WHERE NOT tests @> ARRAY[(SELECT id FROM test WHERE id = ? AND answer = ?)] AND login = ?";
        template.update(sql, test.getId(), test.getAnswer(), test.getId(), test.getAnswer(), username);
     }
 }
