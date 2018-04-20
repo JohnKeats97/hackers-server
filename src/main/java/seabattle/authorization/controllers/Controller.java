@@ -92,20 +92,19 @@ public class Controller {
         try {
             String encodedPassword = passwordEncoder.encode(registerData.getPassword());
             registerData.setPassword(encodedPassword);
-            dbUsers.addUser(registerData);
 
-            ///
             try {
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo("hackers-contest@mail.ru");
-                message.setSubject("Lorem ipsum");
-                message.setText("Lorem ipsum dolor sit amet [...]");
+                message.setSubject("Подтверждение почты");
+                message.setText("Для подтверждения регистрации перейдите по ссылке: ");
                 javaMailSender.send(message);
-            } catch (MessagingException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_EMAIL_USER);
             }
 
-            ///
+            dbUsers.addUser(registerData);
+
         } catch (DuplicateKeyException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseView.ERROR_USER_ALREADY_EXISTS);
         }

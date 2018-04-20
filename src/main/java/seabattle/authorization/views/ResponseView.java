@@ -9,7 +9,8 @@ public enum ResponseView {
     SUCCESS_LOGOUT(3, "You successfully logged out!"),
     ERROR_USER_ALREADY_EXISTS(4, "User already exists!"),
     ERROR_USER_NOT_FOUND(5, "User not found!"),
-    ERROR_NO_RIGHTS_TO_CHANGE_USER(6, "You have no rights to change this user data!");
+    ERROR_NO_RIGHTS_TO_CHANGE_USER(6, "You have no rights to change this user data!"),
+    ERROR_EMAIL_USER(7, "Email error");
 
 
     private final Integer status;
