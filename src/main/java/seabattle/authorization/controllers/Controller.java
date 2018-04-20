@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.MessagingException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import seabattle.authorization.service.UserService;
@@ -17,6 +18,10 @@ import java.sql.Array;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 @RestController
@@ -36,6 +41,10 @@ public class Controller {
     private PasswordEncoder passwordEncoder;
 
     private static final String CURRENT_USER_KEY = "currentUser";
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+
 
     @RequestMapping(method = RequestMethod.GET, path = "info")
     public ResponseEntity info(HttpSession httpSession) {
@@ -83,6 +92,21 @@ public class Controller {
             String encodedPassword = passwordEncoder.encode(registerData.getPassword());
             registerData.setPassword(encodedPassword);
             dbUsers.addUser(registerData);
+
+            ///
+            SimpleMailMessage mail = new SimpleMailMessage();
+            try {
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setTo("hackers-contest@mail.ru");
+                message.setSubject("Lorem ipsum");
+                message.setText("Lorem ipsum dolor sit amet [...]");
+                emailSender.send(message);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            } finally {}
+            javaMailSender.send(mail);
+            //return helper;
+            ///
         } catch (DuplicateKeyException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseView.ERROR_USER_ALREADY_EXISTS);
         }
