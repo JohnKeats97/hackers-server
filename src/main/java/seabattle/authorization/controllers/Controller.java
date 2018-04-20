@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.messaging.MessagingException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -43,7 +44,7 @@ public class Controller {
     private static final String CURRENT_USER_KEY = "currentUser";
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    private JavaMailSenderImpl javaMailSender;
 
 
     @RequestMapping(method = RequestMethod.GET, path = "info")
@@ -94,18 +95,16 @@ public class Controller {
             dbUsers.addUser(registerData);
 
             ///
-            SimpleMailMessage mail = new SimpleMailMessage();
             try {
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo("hackers-contest@mail.ru");
                 message.setSubject("Lorem ipsum");
                 message.setText("Lorem ipsum dolor sit amet [...]");
-                emailSender.send(message);
+                javaMailSender.send(message);
             } catch (MessagingException e) {
                 e.printStackTrace();
-            } finally {}
-            javaMailSender.send(mail);
-            //return helper;
+            }
+
             ///
         } catch (DuplicateKeyException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseView.ERROR_USER_ALREADY_EXISTS);
