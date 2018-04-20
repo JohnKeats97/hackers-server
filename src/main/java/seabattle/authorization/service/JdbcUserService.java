@@ -18,7 +18,8 @@ public class JdbcUserService implements UserService {
             new UserView(resultSet.getString("email"),
                     resultSet.getString("login"),
                     resultSet.getString("password"),
-                    resultSet.getInt("score"));
+                    resultSet.getInt("score"),
+                    resultSet.getInt("isEmail"));
 
     private static final RowMapper<LeaderboardView> READ_USER_LOGIN_SCORE_MAPPER = (resultSet, rowNumber) ->
             new LeaderboardView(null, resultSet.getString("login"),
@@ -41,17 +42,14 @@ public class JdbcUserService implements UserService {
 
     @Override
         public UserView getByLoginOrEmail(String loginOrEmail) {
-        String sql = "SELECT DISTINCT email, login, password, score FROM users WHERE email = ? OR login = ?";
+        String sql = "SELECT DISTINCT email, login, password, score, isEmail FROM users WHERE email = ? OR login = ?";
         return template.queryForObject(sql, READ_USER_MAPPER, loginOrEmail, loginOrEmail);
     }
 
     @Override
-    public UserView changeUser(UserView user) {
-        String sql = "UPDATE users SET (email, password) = (?, ?) WHERE login = ?";
-        if (template.update(sql, user.getEmail(), user.getPassword(), user.getLogin()) != 0) {
-            return user;
-        }
-        return null;
+    public void changeUser(String user) {
+        String sql = "UPDATE users SET (isEmail) = (1) WHERE login = ?";
+        template.update(sql, user);
     }
 
     @Override

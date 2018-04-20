@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users
   score integer NOT NULL DEFAULT 0,
   tests INTEGER[] DEFAULT ARRAY[]::integer[],
   last_answer TIMESTAMP DEFAULT now(),
-  isEmail BOOLEAN DEFAULT false,
+  isEmail integer NOT NULL DEFAULT 0,
   CONSTRAINT unique_login PRIMARY KEY (login),
   CONSTRAINT unique_email UNIQUE (email)
 );

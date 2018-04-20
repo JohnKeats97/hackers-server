@@ -13,7 +13,7 @@ public interface UserService {
 
     Integer[] getTestByLoginOrEmail(String loginOrEmail);
     
-    UserView changeUser(UserView user);
+    void changeUser(String user);
 
     List<LeaderboardView> getLeaderboard(Integer limit);
 

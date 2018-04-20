@@ -26,8 +26,8 @@ import org.springframework.mail.SimpleMailMessage;
 
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 @RestController
-@CrossOrigin(origins = {"http://localhost:8080", "http://hackers-contest.herokuapp.com",
-                        "https://hackers-contest.herokuapp.com"})
+//@CrossOrigin(origins = {"http://localhost:8080", "http://hackers-contest.herokuapp.com",
+//                        "https://hackers-contest.herokuapp.com"})
 @RequestMapping(path = "/api")
 @Validated
 public class Controller {
@@ -68,13 +68,15 @@ public class Controller {
     public ResponseEntity login(@Valid @RequestBody AuthorisationView loggingData, HttpSession httpSession) {
         try {
             UserView currentUser = dbUsers.getByLoginOrEmail(loggingData.getLoginEmail());
-
-            if (passwordEncoder.matches(loggingData.getPassword(), currentUser.getPassword())) {
-                httpSession.setAttribute(CURRENT_USER_KEY, currentUser.getLogin());
-                currentUser.setPassword(null);
-                return ResponseEntity.status(HttpStatus.OK).body(currentUser);
+            if (currentUser.getIsEmail() == 1) {
+                if (passwordEncoder.matches(loggingData.getPassword(), currentUser.getPassword())) {
+                    httpSession.setAttribute(CURRENT_USER_KEY, currentUser.getLogin());
+                    currentUser.setPassword(null);
+                    return ResponseEntity.status(HttpStatus.OK).body(currentUser);
+                }
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseView.ERROR_BAD_LOGIN_DATA);
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseView.ERROR_BAD_LOGIN_DATA);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_BAD_LOGIN_DATA);
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseView.ERROR_BAD_LOGIN_DATA);
         }
@@ -97,7 +99,8 @@ public class Controller {
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo("hackers-contest@mail.ru");
                 message.setSubject("Подтверждение почты");
-                message.setText("Для подтверждения регистрации перейдите по ссылке: ");
+                message.setText("Для подтверждения регистрации перейдите по ссылке: " +
+                        "https://hackers-back.herokuapp.com/api/users/" + registerData.getLogin() );
                 javaMailSender.send(message);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_EMAIL_USER);
@@ -111,33 +114,21 @@ public class Controller {
 
         registerData.setPassword(null);
         registerData.setScore(0);
+        registerData.setIsEmail(0);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(registerData);
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "users/{changedUser}",
+    @RequestMapping(method = RequestMethod.POST, path = "users/{login}",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity change(@Valid @RequestBody UserView newData,
-                                 @PathVariable(value = "changedUser") String changedUser,
-                                 HttpSession httpSession) {
-        String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
-        if (currentUser.equals(changedUser)) {
+                                 @PathVariable(value = "login") String login) {
             try {
-                UserView oldUser = dbUsers.getByLoginOrEmail(changedUser);
-                if (newData.getEmail() != null) {
-                    oldUser.setEmail(newData.getEmail());
-                }
-                if (newData.getPassword() != null) {
-                    String encodedPassword = passwordEncoder.encode(newData.getPassword());
-                    oldUser.setPassword(encodedPassword);
-                }
-                dbUsers.changeUser(oldUser);
-                return ResponseEntity.status(HttpStatus.OK).body(oldUser);
+                dbUsers.changeUser(login);
+                return ResponseEntity.status(HttpStatus.OK).body(ResponseView.OK);
             } catch (DataAccessException ex) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_USER_NOT_FOUND);
             }
-        }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_USER);
     }
 
 

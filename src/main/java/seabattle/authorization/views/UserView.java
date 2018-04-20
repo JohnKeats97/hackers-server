@@ -18,17 +18,32 @@ public final class UserView {
 
     private Integer score;
 
+    private Integer isEmail;
+
     public UserView(@JsonProperty("email") String email, @JsonProperty("login") String login,
-             @JsonProperty("password") String password, @JsonProperty("score") Integer score) {
+             @JsonProperty("password") String password, @JsonProperty("score") Integer score, @JsonProperty("isEmail") Integer isEmail) {
         this.email = email;
         this.login = login;
         this.password = password;
         this.score = score;
+        this.isEmail = isEmail;
     }
 
     @Override
     public String toString() {
         return "login = " + login + " email = " + email + " password = " + password + " score = " + score;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public Integer getIsEmail() {
+        return isEmail;
+    }
+
+    public void setIsEmail(Integer isEmail) {
+        this.isEmail = isEmail;
     }
 
     public String getEmail() {
