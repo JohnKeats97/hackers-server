@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.messaging.MessagingException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import seabattle.authorization.service.UserService;
@@ -17,6 +19,10 @@ import java.sql.Array;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 @RestController
@@ -36,6 +42,10 @@ public class Controller {
     private PasswordEncoder passwordEncoder;
 
     private static final String CURRENT_USER_KEY = "currentUser";
+
+    @Autowired
+    private JavaMailSenderImpl javaMailSender;
+
 
     @RequestMapping(method = RequestMethod.GET, path = "info")
     public ResponseEntity info(HttpSession httpSession) {
@@ -82,7 +92,19 @@ public class Controller {
         try {
             String encodedPassword = passwordEncoder.encode(registerData.getPassword());
             registerData.setPassword(encodedPassword);
+
+            try {
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setTo("hackers-contest@mail.ru");
+                message.setSubject("Подтверждение почты");
+                message.setText("Для подтверждения регистрации перейдите по ссылке: ");
+                javaMailSender.send(message);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_EMAIL_USER);
+            }
+
             dbUsers.addUser(registerData);
+
         } catch (DuplicateKeyException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseView.ERROR_USER_ALREADY_EXISTS);
         }
