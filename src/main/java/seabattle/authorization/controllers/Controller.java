@@ -26,8 +26,8 @@ import org.springframework.mail.SimpleMailMessage;
 
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 @RestController
-//@CrossOrigin(origins = {"http://localhost:8080", "http://hackers-contest.herokuapp.com",
-//                        "https://hackers-contest.herokuapp.com"})
+@CrossOrigin(origins = {"http://localhost:8080", "http://hackers-contest.herokuapp.com",
+                        "https://hackers-contest.herokuapp.com"})
 @RequestMapping(path = "/api")
 @Validated
 public class Controller {
@@ -119,6 +119,7 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.CREATED).body(registerData);
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(method = RequestMethod.POST, path = "users/{login}",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity change(@Valid @RequestBody UserView newData,
