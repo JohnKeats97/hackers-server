@@ -97,7 +97,7 @@ public class Controller {
 
             try {
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setTo("hackers-contest@mail.ru");
+                message.setTo(registerData.getEmail());
                 message.setSubject("Подтверждение почты");
                 message.setText("Для подтверждения регистрации перейдите по ссылке: " +
                         "https://hackers-back.herokuapp.com/api/users/" + registerData.getLogin() );
