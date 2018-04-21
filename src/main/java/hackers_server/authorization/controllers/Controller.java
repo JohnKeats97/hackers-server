@@ -127,12 +127,12 @@ public class Controller  {
     @CrossOrigin(origins = "*")
     @RequestMapping(method = RequestMethod.GET, path = "users/{login}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity change(@PathVariable(value = "login") String login) {
+    public String change(@PathVariable(value = "login") String login) {
             try {
                 dbUsers.changeUser(login);
-                return ResponseEntity.status(HttpStatus.OK).body(ResponseView.OK);
+                return "Подтверждение прошло успешно, теперь вы можете войти на сайт";
             } catch (DataAccessException ex) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_USER_NOT_FOUND);
+                return "Пользователь не найден";
             }
     }
 
