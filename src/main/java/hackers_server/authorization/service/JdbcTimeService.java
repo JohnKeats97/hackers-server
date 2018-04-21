@@ -26,7 +26,7 @@ public class JdbcTimeService implements TimeService {
         try {
             template.query("SELECT * FROM time", READ_TIME_MAPPER);
         }catch (Exception e) {
-            template.update("INSERT INTO time (start, stop) VALUES (?, ?)", "2018-04-21T08:38:28.232Z", "2019-04-21T08:38:28.232Z");
+            template.update("INSERT INTO time (start, stop) VALUES (?, ?)", "2018-04-21", "2019-04-21");
         }
     }
 

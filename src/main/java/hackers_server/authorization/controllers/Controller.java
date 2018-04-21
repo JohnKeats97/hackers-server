@@ -1,5 +1,6 @@
 package hackers_server.authorization.controllers;
 
+import hackers_server.authorization.service.JdbcTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
@@ -35,6 +36,9 @@ public class Controller {
 
     @Autowired
     private JdbcTestService dbTest;
+
+    @Autowired
+    private JdbcTimeService dbTime;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -173,10 +177,16 @@ public class Controller {
     @RequestMapping(method = RequestMethod.GET, path = "time",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TimeView> getTime() {
-
-        return ResponseEntity.status(HttpStatus.OK).body(time);
+        List<TimeView> time = dbTime.getTime();
+        return ResponseEntity.status(HttpStatus.OK).body(time.get(0));
     }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/time",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity setTime(@RequestBody TimeView time) {
+        dbTime.setTime(time);
+        return ResponseEntity.status(HttpStatus.OK).body("{\"response\": \"OK\"}");
+    }
 
     @RequestMapping(method = RequestMethod.GET, path = "test-admin",
             produces = MediaType.APPLICATION_JSON_VALUE)
