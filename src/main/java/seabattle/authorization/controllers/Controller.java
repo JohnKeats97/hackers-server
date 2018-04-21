@@ -127,7 +127,7 @@ public class Controller {
                 dbUsers.changeUser(login);
                 return ResponseEntity.status(HttpStatus.OK).body(ResponseView.OK);
             } catch (DataAccessException ex) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_USER_NOT_FOUND);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(login);
             }
     }
 
