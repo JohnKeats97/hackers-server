@@ -16,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.*;
 import java.util.List;
+
 
 import org.springframework.mail.SimpleMailMessage;
 
@@ -166,6 +168,51 @@ public class Controller {
     public ResponseEntity<AboutView> getAbout() {
         String about = "Created by John Buevich";
         return ResponseEntity.status(HttpStatus.OK).body(new AboutView(about));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "time",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AboutView> getTime() {
+        StringBuilder sb = new StringBuilder();
+
+        File file = new File("a.out");
+
+        try {
+            //Объект для чтения файла в буфер
+            BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
+            try {
+                //В цикле построчно считываем файл
+                String s;
+                while ((s = in.readLine()) != null) {
+                    sb.append(s);
+                    sb.append("\n");
+                }
+            } finally {
+                //Также не забываем закрыть файл
+                in.close();
+            }
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+        //PrintWriter обеспечит возможности записи в файл
+        PrintWriter out = new PrintWriter(file.getAbsoluteFile());
+
+            try {
+                //Записываем текст у файл
+                out.print(sb.toString() + "1");
+            } finally {
+                //После чего мы должны закрыть файл
+                //Иначе файл не запишется
+                out.close();
+            }
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        AboutView time = new AboutView(sb.toString());
+        return ResponseEntity.status(HttpStatus.OK).body(time);
     }
 
 
