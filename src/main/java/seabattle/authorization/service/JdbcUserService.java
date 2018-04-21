@@ -48,8 +48,8 @@ public class JdbcUserService implements UserService {
 
     @Override
     public void changeUser(String user) {
-        String sql = "UPDATE users SET (isEmail) = (1) WHERE login = ?";
-        template.update(sql, user);
+        String sql = "UPDATE users SET (isEmail) = (?) WHERE login = ?";
+        template.update(sql, 1, user);
     }
 
     @Override
