@@ -120,10 +120,9 @@ public class Controller {
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(method = RequestMethod.POST, path = "users/{login}",
-            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity change(@Valid @RequestBody UserView newData,
-                                 @PathVariable(value = "login") String login) {
+    @RequestMapping(method = RequestMethod.GET, path = "users/{login}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity change(@PathVariable(value = "login") String login) {
             try {
                 dbUsers.changeUser(login);
                 return ResponseEntity.status(HttpStatus.OK).body(ResponseView.OK);
