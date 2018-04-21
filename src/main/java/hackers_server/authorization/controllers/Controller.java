@@ -172,52 +172,8 @@ public class Controller {
 
     @RequestMapping(method = RequestMethod.GET, path = "time",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AboutView> getTime() {
-        StringBuilder sb = new StringBuilder();
+    public ResponseEntity<TimeView> getTime() {
 
-        File file = new File("a.out");
-
-
-        try {
-
-            if(!file.exists()){
-                file.createNewFile();
-            }
-
-            //Объект для чтения файла в буфер
-            BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
-            try {
-                //В цикле построчно считываем файл
-                String s;
-                while ((s = in.readLine()) != null) {
-                    sb.append(s);
-                    sb.append("\n");
-                }
-            } finally {
-                //Также не забываем закрыть файл
-                in.close();
-            }
-        } catch(IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-        //PrintWriter обеспечит возможности записи в файл
-        PrintWriter out = new PrintWriter(file.getAbsoluteFile());
-
-            try {
-                //Записываем текст у файл
-                out.print(sb.toString() + "1");
-            } finally {
-                //После чего мы должны закрыть файл
-                //Иначе файл не запишется
-                out.close();
-            }
-        } catch(IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        AboutView time = new AboutView(sb.toString());
         return ResponseEntity.status(HttpStatus.OK).body(time);
     }
 
