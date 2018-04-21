@@ -177,7 +177,13 @@ public class Controller {
 
         File file = new File("a.out");
 
+
         try {
+
+            if(!file.exists()){
+                file.createNewFile();
+            }
+
             //Объект для чтения файла в буфер
             BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
             try {
