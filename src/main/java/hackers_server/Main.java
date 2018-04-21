@@ -1,4 +1,4 @@
-package seabattle;
+package hackers_server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,8 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.handler.PerConnectionWebSocketHandler;
-import seabattle.msgsystem.SocketHandler;
-import seabattle.websocket.WebSocketConfig;
+import hackers_server.msgsystem.SocketHandler;
+import hackers_server.websocket.WebSocketConfig;
 
 
 

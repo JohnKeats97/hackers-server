@@ -1,4 +1,4 @@
-package seabattle.authorization.views;
+package hackers_server.authorization.views;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

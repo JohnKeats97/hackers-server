@@ -1,6 +1,6 @@
-package seabattle.authorization.service;
+package hackers_server.authorization.service;
 
-import seabattle.authorization.views.TestView;
+import hackers_server.authorization.views.TestView;
 
 import java.util.List;
 

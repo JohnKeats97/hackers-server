@@ -1,27 +1,23 @@
-package seabattle.authorization.controllers;
+package hackers_server.authorization.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.messaging.MessagingException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import seabattle.authorization.service.UserService;
-import seabattle.authorization.service.JdbcTestService;
-import seabattle.authorization.views.*;
+import hackers_server.authorization.service.UserService;
+import hackers_server.authorization.service.JdbcTestService;
+import hackers_server.authorization.views.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import java.sql.Array;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
-import org.springframework.mail.MailSender;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.SimpleMailMessage;
 
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
