@@ -96,12 +96,12 @@ public class Controller {
             registerData.setPassword(encodedPassword);
 
             try {
-                SimpleMailMessage message = new SimpleMailMessage();
-                message.setTo(registerData.getEmail());
-                message.setSubject("Подтверждение почты");
-                message.setText("Для подтверждения регистрации перейдите по ссылке: " +
-                        "https://hackers-back.herokuapp.com/api/users/" + registerData.getLogin() );
-                javaMailSender.send(message);
+//                SimpleMailMessage message = new SimpleMailMessage();
+//                message.setTo(registerData.getEmail());
+//                message.setSubject("Подтверждение почты");
+//                message.setText("Для подтверждения регистрации перейдите по ссылке: " +
+//                        "https://hackers-back.herokuapp.com/api/users/" + registerData.getLogin() );
+//                javaMailSender.send(message);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_EMAIL_USER);
             }
