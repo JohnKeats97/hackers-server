@@ -14,8 +14,8 @@ import java.util.List;
 public class JdbcTimeService implements TimeService {
 
     private static final RowMapper<TimeView> READ_TIME_MAPPER = (resultSet, rowNumber) ->
-            new TimeView(resultSet.getString("start"),
-                    resultSet.getString("stop"));
+            new TimeView(resultSet.getString("start_time"),
+                    resultSet.getString("end_time"));
 
 
     private JdbcTemplate template;
@@ -23,22 +23,18 @@ public class JdbcTimeService implements TimeService {
 
     public JdbcTimeService(JdbcTemplate template) {
         this.template = template;
-        try {
-            template.query("SELECT * FROM time", READ_TIME_MAPPER);
-        }catch (Exception e) {
-            template.update("INSERT INTO time (start, stop) VALUES (?, ?)", "2018-04-21", "2019-04-21");
-        }
     }
+
 
     @Override
     public List<TimeView> getTime() {
-        String sql = "SELECT start, end FROM time";
+        String sql = "SELECT start_time, end_time FROM time";
         return template.query(sql, READ_TIME_MAPPER);
     }
 
     @Override
     public void setTime(TimeView time) {
-        String sql = "UPDATE time SET start = ?, stop = ?";
+        String sql = "UPDATE time SET start_time = ?, end_time = ?";
         template.update(sql, time.getStart(), time.getStop());
     }
 }

@@ -10,4 +10,5 @@ public interface TimeService {
     void setTime(TimeView time);
 
     List<TimeView> getTime();
+
 }

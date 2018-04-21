@@ -1,6 +1,8 @@
 package hackers_server.authorization.controllers;
 
 import hackers_server.authorization.service.JdbcTimeService;
+import org.apache.catalina.Lifecycle;
+import org.apache.catalina.LifecycleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
@@ -29,7 +31,7 @@ import org.springframework.mail.SimpleMailMessage;
                         "https://hackers-contest.herokuapp.com"})
 @RequestMapping(path = "/api")
 @Validated
-public class Controller {
+public class Controller  {
 
     @Autowired
     private UserService dbUsers;
@@ -47,6 +49,7 @@ public class Controller {
 
     @Autowired
     private JavaMailSenderImpl javaMailSender;
+
 
 
     @RequestMapping(method = RequestMethod.GET, path = "info")
@@ -258,5 +261,6 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.OK).body(ResponseView.ERROR_NOT_LOGGED_IN);
         }
     }
+
 
 }
