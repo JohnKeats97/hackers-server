@@ -129,6 +129,7 @@ public class Controller  {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public String change(@PathVariable(value = "login") String login) {
             try {
+                dbUsers.getByLoginOrEmail(login);
                 dbUsers.changeUser(login);
                 return "Подтверждение прошло успешно, теперь вы можете войти на сайт";
             } catch (DataAccessException ex) {
